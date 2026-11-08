@@ -1,15 +1,16 @@
 import { Router, type Request, type Response } from "express";
-import { poolConnection } from "../db";
+import { userRouter } from "../services/users/routes";
+import { poolConnection } from "../lib/db";
 
-export const healthRouter = Router();
+const router = Router();
 
-healthRouter.get("/", async (_req: Request, res: Response) => {
+// Health Check
+router.get("/health", async (_req: Request, res: Response) => {
   let dbStatus = "disconnected";
-
   try {
-    const connection = await poolConnection.getConnection();
-    await connection.ping();
-    connection.release();
+    const conn = await poolConnection.getConnection();
+    await conn.ping();
+    conn.release();
     dbStatus = "connected";
   } catch (error: any) {
     dbStatus = `unreachable (${error?.message || "unknown error"})`;
@@ -25,3 +26,9 @@ healthRouter.get("/", async (_req: Request, res: Response) => {
     },
   });
 });
+
+// Domain Routes
+router.use("/api/users", userRouter);
+
+export default router;
+
