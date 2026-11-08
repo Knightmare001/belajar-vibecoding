@@ -1,18 +1,20 @@
 {
   "name": "belajar_vibecoding",
-  "module": "src/index.ts",
+  "module": "backend/src/server.ts",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch src/index.ts",
-    "start": "bun src/index.ts",
+    "dev": "bun --watch backend/src/server.ts",
+    "start": "bun backend/src/server.ts",
     "typecheck": "bun check",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "bun backend/src/lib/seed.ts"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/bun": "^1.4.4",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
@@ -23,6 +25,7 @@
     "typescript": "^7"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",
     "drizzle-orm": "^0.45.4",
